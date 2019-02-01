@@ -1,4 +1,4 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -40,10 +40,10 @@
                             <div class="card-body">
                                     <!--Display current/running time here using moment Js-->
                                     <h5>Current time: <span id="current-time"></span></h5>
-                                    <table class="table table-hover table-responsive-md">
+                                    <table class="table table-hover table-responsive-md text-center">
                                       <thead>
                                             <tr>
-                                            
+                                                <th scope="col">Delete? </th>
                                                 <th scope="col">Train name </th>
                                                 <th scope="col">Destination </th>
                                                 <th scope="col">Frequency (min) </th>
@@ -84,7 +84,7 @@
                                             <small id="not-a-number" class="form-validation"></small>
                                             <input type="text" class="form-control" id="frequency" placeholder="">
                                           </div>
-                                          <p id="missing-field" class="form-validation"></p>
+                                          
                                           <button type="submit" class="btn btn-info rounded" id="add-train">Add Train to Schedule!</button>
             
                                          

@@ -12,7 +12,7 @@
 
 
     var database = firebase.database();
-
+   
     // var $name = $("#train-name").val().trim();
     // var $destination = $("#destination").val().trim();
     // var $time = $("#time").val().trim();
@@ -20,7 +20,7 @@
 
     // console.log($name, $destination, $time, $frequency);
 
-$("#add-train").on("click", function(){
+$("#add-train").on("click",  function(){
 
 
     var $name = $("#train-name").val().trim();
@@ -28,24 +28,35 @@ $("#add-train").on("click", function(){
     var $time = $("#time").val().trim();
     var $frequency = $("#frequency").val().trim();
 
-    console.log($name, $destination, $time, $frequency);
+    
 
-    database.ref().push({
+    var test = database.ref().push({
         name: $name,
         destination: $destination,
         time: $time,
-        frequency: $frequency
-
+        frequency: $frequency,
+       // id: database.ref().push().key
   });
-
+  console.log("TEST TEST");
+  console.log(test.key);
+  
 });
 
-database.ref().on("child_added", function(snapshot){
 
+database.ref().on("child_added", function(snapshot){
+    
     //make new table row each time a child is added to data base
     var t_row = $("<tr>");
+    
+    var deleteButton = $("<button type='button' class='btn btn-info delete'>Delete</button>");
+        deleteButton.attr("id", snapshot.key);
+        
+        
+    t_row.append(deleteButton);
+        
     //get the name, destination and frequency from the database and store in variables
     var t_name = $("<td>").html(snapshot.val().name);
+    
     var t_destination = $("<td>").html(snapshot.val().destination);
 
     //get frequency of train from databse and store into variable for calculations for next train and 
@@ -85,11 +96,34 @@ database.ref().on("child_added", function(snapshot){
     t_row.append(t_name, t_destination, t_frequency, t_nextTrain, t_minutesAway);
     $("#schedule-body").append(t_row);
     
+    $(".delete").on("click", function(){
+        console.log("Clicked");
+        var idToDelete = $(this).attr("id");
+        $(this).parent().remove();
+        console.log(idToDelete);
+        database.ref(idToDelete).remove();
+       
+        
+    });
+    
+
+    
 });
 
 //set current time to show on screen
 var currentTime = moment().format('LT');
 $("#current-time").text(currentTime);
+
+//why does delete only work if in database.ref function??
+
+// $(".delete").on("click", function(){
+//     console.log("Clicked");
+//     console.log($(this).closest("td"));
+//     //$(this).parent().remove();
+    
+// });
+
+
   
 
 
